@@ -16,10 +16,27 @@ Route::get('/', [
     'uses'  => 'MainController@index'
 ]);
 
+Route::get('/input', [
+    'as'    => 'input.main',
+    'uses'  => 'MainController@input'
+]);
+
 Route::get('api/words', [
-    'as'    => 'words',
+    'as'    => 'api.words',
     'uses'  => 'MainController@words'
 ]);
+
+
+Route::post('api/remove', [
+    'as'    => 'api.remove',
+    'uses'  => 'MainController@remove'
+]);
+
+Route::post('api/add', [
+    'as'    => 'api.add',
+    'uses'  => 'MainController@add'
+]);
+
 
 /*
 |--------------------------------------------------------------------------

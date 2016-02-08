@@ -10,6 +10,11 @@ var App = new Vue({
 	data: {
 		started: false,
 		words: [],
+		intervals: {
+			words: 5,
+			sections: 1,
+		},
+		counter: 0,
 		current: '',
 		idx: 0,
 		speaker: responsiveVoice,
@@ -23,18 +28,23 @@ var App = new Vue({
 	ready: function(){
 
 	},
+	computed: {
+
+	},
 	events: {
 		"SpeakWasFinished": function(){
 			var _this = this;
+			
 			if(this.idx >= this.words.length){
 				this.idx = 0; //start over
+
 				setTimeout(function(){
 					_this.init();
-				}, 5000);
+				}, _this.intervals.sections * 1000);
 			} else {
 				setTimeout(function(){
 					_this.startTalking();
-				}, 1000);
+				}, _this.intervals.words * 1000);
 			}
 		}
 	},
