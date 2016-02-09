@@ -12,7 +12,10 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss');
-    mix.scripts('words.src.js','public/assets/js/words.js');
+    // mix.scripts([
+    // 	'../../../node_modules/jquery.countdown/jquery.countdown.js'
+    // 	],
+    // 	'public/assets/js/vendor-libs.js');
     mix.browserify('main.src.js','public/assets/js/main.js');
     mix.browserify('input.src.js','public/assets/js/input.js');
 });

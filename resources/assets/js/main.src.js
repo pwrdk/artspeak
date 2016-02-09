@@ -10,7 +10,9 @@ var App = new Vue({
 	data: {
 		started: false,
 		words: [],
+		completed: false,
 		intervals: {
+			duration: 600,
 			words: 5,
 			sections: 1,
 		},
@@ -29,15 +31,23 @@ var App = new Vue({
 
 	},
 	computed: {
-
+		'time': function(){
+			var _this = this;
+			return new Date(new Date().valueOf() + _this.intervals.duration * 60 * 1000);
+		}
 	},
 	events: {
 		"SpeakWasFinished": function(){
 			var _this = this;
+			console.log("Speak Done!", this.completed);
 			
+			//We're done, finish the sentence and stop.
+			if(this.completed) {
+				this.startStop();
+				return;
+			}
 			if(this.idx >= this.words.length){
 				this.idx = 0; //start over
-
 				setTimeout(function(){
 					_this.init();
 				}, _this.intervals.sections * 1000);
@@ -46,18 +56,24 @@ var App = new Vue({
 					_this.startTalking();
 				}, _this.intervals.words * 1000);
 			}
+		},
+		"CountdownHasFinished": function(){
+			this.completed = true;
 		}
 	},
 	methods: {
-		start: function() {
+		startStop: function() {
 			this.started = !this.started;
 			
 			if(this.started){
+				this.completed = false;
 				console.log("Starting");
+				this.setCountdown();
 				this.init();
 			} else {
 				console.log("Stopping");
-				this.speaker.cancel();
+				$('#countdown').countdown('pause');
+				this.setCountdown();
 			}
 		},
 		init: function(){
@@ -66,6 +82,19 @@ var App = new Vue({
 	        	this.words = response.data;
 				this.startTalking();
 	        });
+		},
+		setCountdown: function(){
+			var _this = this;
+		
+			$('#countdown').countdown(this.time, {elapse: true})
+			.on('update.countdown', function(event) {
+				if (event.elapsed) {
+					$(this).html("Done.");
+					_this.$emit("CountdownHasFinished");
+				} else {
+					$(this).html(event.strftime('%M min. %S sec.'));
+				}
+			});
 		},
 		startTalking: function(){
 			if(this.started){
@@ -91,9 +120,5 @@ var App = new Vue({
 			Console.log("Done");
 		}
 	},
-	watch: {
-
-	}
-})
-
-
+});
+ 

@@ -17,7 +17,7 @@
             html, body {
                 height: 100%;
             }
-
+            
             body {
                 margin: 0;
                 padding: 0;
@@ -40,7 +40,7 @@
                 font-size: 46px;
             }
             h3 {
-                margin-top: 200px;
+                margin-top: 140px;
                 font-size: 96px;
                 text-transform: uppercase;
             }
@@ -149,34 +149,62 @@
         </style>
     </head>
     <body id="body">
+    
         <div class="container">
             <div class="content">
                 <div class="title">ArtSpeak 1.0</div>
+                <div class="row" v-if="!started">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>Varighed: @{{ intervals.duration }} min</h4>
+                    <div class="range range-primary">
+                        <input type="range" name="range" min="1" max="30" value="1" v-model="intervals.duration">
+                        <output id="range">@{{ intervals.duration }}</output>
+                    </div>
+                    <br />
+                    <h4>Pause mellem ord: @{{ intervals.words }} sec</h4>
+                    <div class="range range-primary">
+                        <input type="range" name="range" min="0" max="10" value="1" v-model="intervals.words">
+                        <output id="range">@{{ intervals.words }}</output>
+                    </div>
+                    <br />
+                    <h4>Pause mellem sætninger: @{{ intervals.sections }} sec</h4>
+                    <div class="range range-primary">
+                        <input type="range" name="range" min="1" max="10" value="5" v-model="intervals.sections">
+                        <output id="range">@{{ intervals.sections }}</output>
+                    </div>
+                </div>
+                </div>
                 <br />
-                <div>
-                <button class="btn btn-lg btn-primary" @click="start"><span v-if="!started">Start</span><span v-else>Stop for helvede</span></button>
                 <hr />
+                <div class="row">
+                <div class="col-md-12">
+                    <button
+                        class="btn btn-lg btn-default" 
+                        @click="startStop"
+                        >
+                        <span v-if="!started">
+                            Start eksperimentet</span>
+                        <span v-else>
+                            Stop eksperimentet
+                        </span>
+                    </button>
+                </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <h4 id="countdown"></h4>
+                </div>
+                <div class="row">
                 <h3 v-if="started">@{{ words[0] }} @{{ words[1] }}</h3>
                 </div>
-            </div>
-            <div v-if="started" style="padding-top: 140px;" class="col-md-6 col-md-offset-3">
-            <h4>Pause mellem ord: @{{ intervals.words }} sec</h4>
-            <div class="range range-primary">
-                <input type="range" name="range" min="1" max="10" value="1" v-model="intervals.words">
-                <output id="range">@{{ intervals.words }}</output>
-            </div>
-            <br />
-            <h4>Pause mellem sætninger: @{{ intervals.sections }} sec</h4>
-            <div class="range range-primary">
-                <input type="range" name="range" min="1" max="10" value="5" v-model="intervals.sections">
-                <output id="range">@{{ intervals.sections }}</output>
-            </div>
             </div>
         </div>
         <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
         <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+        <script src="/assets/js/jquery.countdown.min.js"></script>
         <script src="/assets/js/main.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
     </body>
 </html>
