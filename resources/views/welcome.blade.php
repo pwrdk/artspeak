@@ -157,7 +157,7 @@
                 <div class="col-md-6 col-md-offset-3">
                     <h4>Varighed: @{{ intervals.duration }} min</h4>
                     <div class="range range-primary">
-                        <input type="range" name="range" min="1" max="30" value="1" v-model="intervals.duration">
+                        <input type="range" name="range" min="1" max="30" value="10" v-model="intervals.duration">
                         <output id="range">@{{ intervals.duration }}</output>
                     </div>
                     <br />
@@ -192,7 +192,7 @@
                 </div>
                 <div class="row">
                     <br />
-                    <h4 id="countdown"></h4>
+                    <h4 v-show="started" id="countdown"></h4>
                 </div>
                 <div class="row">
                 <h3 v-if="started">@{{ words[0] }} @{{ words[1] }}</h3>

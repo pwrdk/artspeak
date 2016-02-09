@@ -31,10 +31,7 @@ var App = new Vue({
 
 	},
 	computed: {
-		'time': function(){
-			var _this = this;
-			return new Date(new Date().valueOf() + _this.intervals.duration * 60 * 1000);
-		}
+
 	},
 	events: {
 		"SpeakWasFinished": function(){
@@ -72,8 +69,7 @@ var App = new Vue({
 				this.init();
 			} else {
 				console.log("Stopping");
-				$('#countdown').countdown('pause');
-				this.setCountdown();
+				$('#countdown').countdown('stop');
 			}
 		},
 		init: function(){
@@ -86,7 +82,7 @@ var App = new Vue({
 		setCountdown: function(){
 			var _this = this;
 		
-			$('#countdown').countdown(this.time, {elapse: true})
+			$('#countdown').countdown(this.getTime())
 			.on('update.countdown', function(event) {
 				if (event.elapsed) {
 					$(this).html("Done.");
@@ -118,6 +114,10 @@ var App = new Vue({
 		},
 		onSpeakDone: function(){
 			Console.log("Done");
+		},
+		getTime: function(){
+			var _this = this;
+			return new Date(new Date().valueOf() + _this.intervals.duration * 60 * 1000);
 		}
 	},
 });
